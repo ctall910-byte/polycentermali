@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import SocialIcon from '../components/SocialIcon.astro';
+import { site, reseaux } from '../data/site.js';
+const tel = (t) => `tel:${t.replace(/\s/g, '')}`;
+const couleurs = { TikTok: '#25f4ee', Instagram: '#d62976', Facebook: '#1877f2', X: '#555' };
+---
+<Base title="Contact" description="Contacter Poly-Center Mali à Niamakoro, Bamako.">
+  <div class="title"><div class="wrap"><h1>Contact</h1><p>Choisissez le moyen le plus simple pour vous.</p></div></div>
+  <section><div class="wrap"><div class="contact">
+    <div class="card rv"><h3>Téléphone</h3>{site.telephones.map((t) => <a class="tel" href={tel(t)}>{t}</a>)}</div>
+    <a class="card navy rv" style="--i:1" href={`https://wa.me/${site.whatsapp}`}><h3>WhatsApp</h3><p>Écrivez-nous au {site.telephones[0]}</p></a>
+    <a class="card rv" style="--i:2" href={`mailto:${site.email}`}><h3>E-mail</h3><p>{site.email}</p></a>
+    <div class="card navy rv" style="--i:3"><h3>Adresse</h3><p>{site.adresse}</p></div>
+  </div></div></section>
+
+  <section class="soft"><div class="wrap">
+    <div class="head rv"><h2>Suivez-nous</h2><p>Nos formations, nos réalisations et nos annonces sur les réseaux sociaux.</p></div>
+    <div class="socs">{reseaux.map((r, i) => {
+      const Tag = r.url ? 'a' : 'div';
+      return (
+        <Tag class={`soc rv${r.url ? '' : ' off'}`} style={`--i:${i};--c:${couleurs[r.nom] || '#ee7b1e'}`} href={r.url || undefined} target={r.url ? '_blank' : undefined} rel={r.url ? 'noopener' : undefined} aria-label={r.nom}>
+          <span class="soc-ico"><SocialIcon name={r.nom} size={78} /></span>
+          <b>{r.nom}</b>
+          <span class="soc-h">{r.url ? (r.handle || 'Suivre le compte') : (r.handle || 'Bientôt disponible')}</span>
+        </Tag>);
+    })}</div>
+  </div></section>
+</Base>
